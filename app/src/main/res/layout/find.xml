@@ -1,0 +1,198 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:nestedScrollingEnabled="true"
+    android:id="@+id/findlinear"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/FindSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/actual_search_box"
+        android:elevation="6dp" />
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:id="@+id/findCoordinatorLayout"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:elevation="0dp"
+            android:visibility="visible"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="ifContentScrolls"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sadAnim"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="false"
+            app:lottie_rawRes="@raw/sad"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/noWifiLayout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:elevation="2dp"
+            android:visibility="invisible"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/no_wifi" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_internet_connection" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTryAgain"
+                android:text="@string/try_again"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/loadingAnim"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="false"
+            app:lottie_rawRes="@raw/loading"/>
+
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/barLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fcfcfc"
+            app:elevation="12dp">
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/advancedSearchBtn"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/fira_sans_condensed"
+                app:strokeColor="@color/colorPrimary"
+                android:textColor="#ffffff"
+                app:icon="@drawable/advanced_search"
+                app:iconGravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Advanced Search"
+                app:layout_scrollFlags="scroll"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/locationButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:alpha="0.9"
+                android:fontFamily="@font/fira_sans_condensed"
+                android:text="Change Location"
+                android:textColor="@color/colorPrimaryDark"
+                app:icon="@drawable/location_pin"
+                app:layout_scrollFlags="scroll"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="0.8dp" />
+
+
+            <TextView
+                android:id="@+id/typeAndNumberTv"
+                style="@style/sh6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="6dp"
+                android:text="default text"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                app:layout_scrollFlags="scroll" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/textColor"
+                app:layout_scrollFlags="scroll"
+                android:alpha="0.1"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="0dp"
+                android:orientation="horizontal"
+                app:layout_anchor="@id/FindSearch"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sortBtn"
+                    style="@style/outlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Sort By"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mapBtn"
+                    style="@style/outlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Map View" />
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/filter_layout" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</LinearLayout>

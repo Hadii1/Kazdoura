@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="6dp" />
+            <solid android:color="@color/colorPrimaryLight" />
+            <gradient android:centerColor="@color/colorPrimaryLight" android:endColor="@color/colorPrimary" android:startColor="@color/com_facebook_blue" android:type="linear" />
+            <stroke android:width="0sp" android:color="#000000" />
+        </shape>
+        <stroke android:width="0sp" android:color="#ffffff" />
+
+    </item>
+</selector>

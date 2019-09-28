@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/Find">
+
+    <fragment
+        android:id="@+id/Find"
+        android:name="com.Czynt.kazdoura.Find.Find"
+        android:label="fragment_find"
+        tools:layout="@layout/find">
+        <action
+            android:id="@+id/action_Find_to_Login"
+            app:destination="@id/Login" />
+        <action
+            android:id="@+id/action_Find_self"
+            app:popUpTo="@id/Find" />
+        <action
+            android:id="@+id/action_Find_to_store_Interface"
+            app:destination="@id/storeInterface"
+            app:enterAnim="@anim/fade_scale_animation"
+            app:popEnterAnim="@anim/fade_scale_animation" />
+        <action
+            android:id="@+id/action_Find_to_locationFragment"
+            app:destination="@id/locationFragment" />
+        <action
+            android:id="@+id/action_Find_to_mapFragment"
+            app:destination="@id/mapFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/explore"
+        android:name="com.Czynt.kazdoura.Explore"
+        android:label="fragment_explore"
+        tools:layout="@layout/explore" />
+
+    <fragment
+        android:id="@+id/Profile"
+        android:name="com.Czynt.kazdoura.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/profile" >
+        <action
+            android:id="@+id/action_Profile_to_Login"
+            app:destination="@id/Login" />
+    </fragment>
+    <navigation
+        android:id="@+id/Login"
+        app:startDestination="@id/loginFrag">
+        <fragment
+            android:id="@+id/loginFrag"
+            android:name="com.Czynt.kazdoura.Login.Login"
+            android:label="fragment_login"
+            tools:layout="@layout/login">
+            <action
+                android:id="@+id/action_loginFrag_to_phoneAuth"
+                app:destination="@+id/phoneAuth"
+                app:enterAnim="@anim/bottom_up"
+                app:exitAnim="@anim/fade_out" />
+            <action
+                android:id="@+id/action_loginFrag_to_emailLogin"
+                app:destination="@id/emailLogin"
+                app:enterAnim="@anim/bottom_up"
+                app:exitAnim="@anim/fade_out"
+               />
+
+        </fragment>
+        <action
+            android:id="@+id/action_global_Find"
+            app:destination="@id/Find"
+            app:enterAnim="@anim/top_downward"
+            app:exitAnim="@anim/fade_out" />
+        <fragment
+            android:id="@+id/phoneAuth"
+            android:name="com.Czynt.kazdoura.Login.PhoneAuth.PhoneAuth"
+            android:label="phone_auth"
+            tools:layout="@layout/phone_auth" />
+        <fragment
+            android:id="@+id/emailLogin"
+            android:name="com.Czynt.kazdoura.Login.EmailAuth.EmailLogin"
+            android:label="fragment_email_login"
+            tools:layout="@layout/email_login" />
+
+    </navigation>
+    <fragment
+        android:id="@+id/storeInterface"
+        android:name="com.Czynt.kazdoura.StoreInterface"
+        android:label="fragment_store__interface"
+        tools:layout="@layout/store__interface" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.Czynt.kazdoura.LocationBottomSheetFragment"
+        android:label="fragment_locatipn"
+        tools:layout="@layout/fragment_locatipn" >
+        <action
+            android:id="@+id/action_locatipnFragment_to_Find"
+            app:destination="@id/Find" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.Czynt.kazdoura.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+
+</navigation>

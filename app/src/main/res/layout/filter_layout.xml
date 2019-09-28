@@ -1,0 +1,1325 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvFilter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/search_box"
+    android:elevation="6dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginEnd="1dp"
+    android:fillViewport="true"
+    app:behavior_peekHeight="50dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter"
+            style="@style/ph5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/fira_sans_condensed"
+            android:gravity="center"
+            android:text="@string/looking_for"
+            android:textColor="#000000"
+            android:drawableTop="@drawable/sheet_dash"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/foodHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/food"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter" />
+
+        <ImageButton
+            android:id="@+id/restaurants"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:tag="@string/restaurants"
+            android:gravity="center"
+            android:src="@drawable/restaurant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foodHeader"
+            tools:layout_editor_absoluteY="90dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/restaurants"
+            app:layout_constraintEnd_toEndOf="@id/restaurants"
+            app:layout_constraintStart_toStartOf="@id/restaurants"
+            app:layout_constraintTop_toBottomOf="@id/restaurants" />
+
+        <ImageButton
+            android:id="@+id/snacks"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/snacks"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:src="@drawable/snacks"
+            app:layout_constraintBottom_toBottomOf="@id/restaurants"
+            app:layout_constraintStart_toEndOf="@id/restaurants"
+            app:layout_constraintTop_toTopOf="@id/restaurants" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/snacks"
+            app:layout_constraintEnd_toEndOf="@id/snacks"
+            app:layout_constraintStart_toStartOf="@id/snacks"
+            app:layout_constraintTop_toBottomOf="@id/snacks" />
+
+        <ImageButton
+            android:id="@+id/bakeries"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/bakeries"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:src="@drawable/bakeries"
+            app:layout_constraintBottom_toBottomOf="@id/snacks"
+            app:layout_constraintStart_toEndOf="@id/snacks"
+            app:layout_constraintTop_toTopOf="@id/snacks" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/bakeries"
+            app:layout_constraintEnd_toEndOf="@id/bakeries"
+            app:layout_constraintStart_toStartOf="@id/bakeries"
+            app:layout_constraintTop_toBottomOf="@id/bakeries" />
+
+        <ImageButton
+            android:id="@+id/sweets"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/sweets"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:src="@drawable/sweets"
+            app:layout_constraintBottom_toBottomOf="@id/bakeries"
+            app:layout_constraintStart_toEndOf="@id/bakeries"
+            app:layout_constraintTop_toTopOf="@id/bakeries" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/sweets"
+            app:layout_constraintEnd_toEndOf="@id/sweets"
+            app:layout_constraintStart_toStartOf="@id/sweets"
+            app:layout_constraintTop_toBottomOf="@id/sweets" />
+
+        <ImageButton
+            android:id="@+id/juices"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/juices"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:src="@drawable/juices"
+            app:layout_constraintBottom_toBottomOf="@id/sweets"
+            app:layout_constraintStart_toEndOf="@id/sweets"
+            app:layout_constraintTop_toTopOf="@id/sweets" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/juices"
+            app:layout_constraintEnd_toEndOf="@id/juices"
+            app:layout_constraintStart_toStartOf="@id/juices"
+            app:layout_constraintTop_toBottomOf="@id/juices" />
+
+        <ImageButton
+            android:id="@+id/liquor"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:tag="@string/liquor"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#e39e21"
+            android:src="@drawable/liquor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/restaurants" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/liquorText"
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/liquor"
+            app:layout_constraintEnd_toEndOf="@id/liquor"
+            app:layout_constraintStart_toStartOf="@id/liquor"
+            app:layout_constraintTop_toBottomOf="@id/liquor" />
+
+
+
+        <ImageButton
+            android:id="@+id/seaFood"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:tag="@string/sea_food"
+            android:backgroundTint="#e39e21"
+            android:background="@drawable/sub_categories_button"
+            android:src="@drawable/seafood"
+            app:layout_constraintStart_toEndOf="@id/liquor"
+            app:layout_constraintTop_toBottomOf="@id/bakeries" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/seaFoodText"
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/sea_food"
+            app:layout_constraintEnd_toEndOf="@id/seaFood"
+            app:layout_constraintStart_toStartOf="@id/seaFood"
+            app:layout_constraintTop_toBottomOf="@id/seaFood" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/entertainmentHeader"
+            style="@style/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/entertainment"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/liquorText" />
+
+        <ImageButton
+            android:id="@+id/cafes"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#34495e"
+            android:gravity="center"
+            android:tag="@string/cafes"
+            android:src="@drawable/cafes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/entertainmentHeader"
+            tools:layout_editor_absoluteY="316dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/cafes"
+            app:layout_constraintEnd_toEndOf="@id/cafes"
+            app:layout_constraintStart_toStartOf="@id/cafes"
+            app:layout_constraintTop_toBottomOf="@id/cafes" />
+
+        <ImageButton
+            android:id="@+id/bars"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:tag="@string/bars"
+            android:backgroundTint="#34495e"
+            android:gravity="center"
+            android:src="@drawable/bars"
+            app:layout_constraintBottom_toBottomOf="@id/cafes"
+            app:layout_constraintStart_toEndOf="@id/cafes"
+            app:layout_constraintTop_toTopOf="@id/cafes"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/bars"
+            app:layout_constraintEnd_toEndOf="@id/bars"
+            app:layout_constraintStart_toStartOf="@id/bars"
+            app:layout_constraintTop_toBottomOf="@id/bars" />
+
+        <ImageButton
+            android:id="@+id/lounges"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/lounges"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#34495e"
+            android:gravity="center"
+            android:src="@drawable/lounges"
+            app:layout_constraintBottom_toBottomOf="@id/bars"
+            app:layout_constraintStart_toEndOf="@id/bars"
+            app:layout_constraintTop_toTopOf="@id/bars"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/lounges"
+            app:layout_constraintEnd_toEndOf="@id/lounges"
+            app:layout_constraintStart_toStartOf="@id/lounges"
+            app:layout_constraintTop_toBottomOf="@id/lounges" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/bars"
+            app:layout_constraintEnd_toEndOf="@id/bars"
+            app:layout_constraintStart_toStartOf="@id/bars"
+            app:layout_constraintTop_toBottomOf="@id/bars" />
+
+        <ImageButton
+            android:id="@+id/beachResorts"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#34495e"
+            android:tag="@string/beach_resorts"
+            android:gravity="center"
+            android:src="@drawable/resorts"
+            app:layout_constraintBottom_toBottomOf="@id/lounges"
+            app:layout_constraintStart_toEndOf="@id/lounges"
+            app:layout_constraintTop_toTopOf="@id/lounges" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Resorts"
+            app:layout_constraintEnd_toEndOf="@id/beachResorts"
+            app:layout_constraintStart_toStartOf="@id/beachResorts"
+            app:layout_constraintTop_toBottomOf="@id/beachResorts" />
+
+        <ImageButton
+            android:id="@+id/clubs"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/clubs"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#34495e"
+            android:gravity="center"
+            android:src="@drawable/clubs"
+            app:layout_constraintBottom_toBottomOf="@id/beachResorts"
+            app:layout_constraintStart_toEndOf="@id/beachResorts"
+            app:layout_constraintTop_toTopOf="@id/beachResorts" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/clubs"
+            app:layout_constraintEnd_toEndOf="@id/clubs"
+            app:layout_constraintStart_toStartOf="@id/clubs"
+            app:layout_constraintTop_toBottomOf="@id/clubs" />
+
+        <ImageButton
+            android:id="@+id/pubs"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:tag="@string/pubs"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#34495e"
+            android:gravity="center"
+            android:src="@drawable/pubs"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cafes" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pubsText"
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pubs"
+            app:layout_constraintEnd_toEndOf="@id/pubs"
+            app:layout_constraintStart_toStartOf="@id/pubs"
+            app:layout_constraintTop_toBottomOf="@id/pubs" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fashionHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/fashion"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pubsText"
+            tools:layout_editor_absoluteY="488dp" />
+
+        <ImageButton
+            android:id="@+id/clothing"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:tag="@string/clothing"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#70324e"
+            android:gravity="center"
+            android:src="@drawable/clothing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fashionHeader" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/clothingText"
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/clothing"
+            app:layout_constraintEnd_toEndOf="@id/clothing"
+            app:layout_constraintStart_toStartOf="@id/clothing"
+            app:layout_constraintTop_toBottomOf="@id/clothing" />
+
+        <ImageButton
+            android:id="@+id/perfumes"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/perfumes"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#70324e"
+            android:gravity="center"
+            android:src="@drawable/perfumes"
+            app:layout_constraintBottom_toBottomOf="@id/clothing"
+            app:layout_constraintStart_toEndOf="@id/clothing"
+            app:layout_constraintTop_toTopOf="@id/clothing"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/perfumes"
+            app:layout_constraintEnd_toEndOf="@id/perfumes"
+            app:layout_constraintStart_toStartOf="@id/perfumes"
+            app:layout_constraintTop_toBottomOf="@id/perfumes" />
+
+        <ImageButton
+            android:id="@+id/watches"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/watches"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#70324e"
+            android:gravity="center"
+            android:src="@drawable/watches"
+            app:layout_constraintBottom_toBottomOf="@id/perfumes"
+            app:layout_constraintStart_toEndOf="@id/perfumes"
+            app:layout_constraintTop_toTopOf="@id/perfumes"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/watches"
+            app:layout_constraintEnd_toEndOf="@id/watches"
+            app:layout_constraintStart_toStartOf="@id/watches"
+            app:layout_constraintTop_toBottomOf="@id/watches" />
+
+        <ImageButton
+            android:id="@+id/jewellery"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/jewellery"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#70324e"
+            android:gravity="center"
+            android:src="@drawable/jewellery"
+            app:layout_constraintBottom_toBottomOf="@id/watches"
+            app:layout_constraintStart_toEndOf="@id/watches"
+            app:layout_constraintTop_toTopOf="@id/watches"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/jewellery"
+            app:layout_constraintEnd_toEndOf="@id/jewellery"
+            app:layout_constraintStart_toStartOf="@id/jewellery"
+            app:layout_constraintTop_toBottomOf="@id/jewellery" />
+
+        <ImageButton
+            android:id="@+id/accessories"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/accessories"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#70324e"
+            android:gravity="center"
+            android:src="@drawable/accessories"
+            app:layout_constraintBottom_toBottomOf="@id/jewellery"
+            app:layout_constraintStart_toEndOf="@id/jewellery"
+            app:layout_constraintTop_toTopOf="@id/jewellery"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/accessories"
+            app:layout_constraintEnd_toEndOf="@id/accessories"
+            app:layout_constraintStart_toStartOf="@id/accessories"
+            app:layout_constraintTop_toBottomOf="@id/accessories" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/artsHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/arts_and_books"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clothingText" />
+
+        <ImageButton
+            android:id="@+id/musicStores"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/musical_stores"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#304579"
+            android:gravity="center"
+            android:src="@drawable/musicstores"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/artsHeader"
+            tools:layout_editor_absoluteY="90dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/musicStoresText"
+            android:gravity="center"
+            android:text="@string/musical_stores"
+            app:layout_constraintEnd_toEndOf="@id/musicStores"
+            app:layout_constraintStart_toStartOf="@id/musicStores"
+            app:layout_constraintTop_toBottomOf="@id/musicStores" />
+
+        <ImageButton
+            android:id="@+id/musicStudios"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#304579"
+            android:tag="@string/music_studios"
+            android:gravity="center"
+            android:src="@drawable/musicstudios"
+            app:layout_constraintBottom_toBottomOf="@id/musicStores"
+            app:layout_constraintStart_toEndOf="@id/musicStores"
+            app:layout_constraintTop_toTopOf="@id/musicStores"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/music_studios"
+            app:layout_constraintEnd_toEndOf="@id/musicStudios"
+            app:layout_constraintStart_toStartOf="@id/musicStudios"
+            app:layout_constraintTop_toBottomOf="@id/musicStudios" />
+
+        <ImageButton
+            android:id="@+id/artGalleries"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/art_galleries"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#304579"
+            android:gravity="center"
+            android:src="@drawable/artgalleries"
+            app:layout_constraintBottom_toBottomOf="@id/musicStores"
+            app:layout_constraintStart_toEndOf="@id/musicStudios"
+            app:layout_constraintTop_toTopOf="@id/musicStores"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/art_galleries"
+            app:layout_constraintEnd_toEndOf="@id/artGalleries"
+            app:layout_constraintStart_toStartOf="@id/artGalleries"
+            app:layout_constraintTop_toBottomOf="@id/artGalleries" />
+
+        <ImageButton
+            android:id="@+id/photographyStudios"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/photography_studios"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#304579"
+            android:gravity="center"
+            android:src="@drawable/photographystudios"
+            app:layout_constraintBottom_toBottomOf="@id/artGalleries"
+            app:layout_constraintStart_toEndOf="@id/artGalleries"
+            app:layout_constraintTop_toTopOf="@id/artGalleries"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/photography_studios"
+            app:layout_constraintEnd_toEndOf="@id/photographyStudios"
+            app:layout_constraintStart_toStartOf="@id/photographyStudios"
+            app:layout_constraintTop_toBottomOf="@id/photographyStudios" />
+
+        <ImageButton
+            android:id="@+id/libraries"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/libraries"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#304579"
+            android:gravity="center"
+            android:src="@drawable/libraries"
+            app:layout_constraintBottom_toBottomOf="@id/photographyStudios"
+            app:layout_constraintStart_toEndOf="@id/photographyStudios"
+            app:layout_constraintTop_toTopOf="@id/photographyStudios"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/libraries"
+            app:layout_constraintEnd_toEndOf="@id/libraries"
+            app:layout_constraintStart_toStartOf="@id/libraries"
+            app:layout_constraintTop_toBottomOf="@id/libraries" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/electronicsHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/electronics"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/musicStoresText"
+            tools:layout_editor_absoluteY="488dp" />
+
+        <ImageButton
+            android:id="@+id/phones"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#20857c"
+            android:gravity="center"
+            android:tag="@string/phones"
+            android:src="@drawable/phones"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/electronicsHeader"
+            android:layout_marginTop="15dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/phonesText"
+            android:gravity="center"
+            android:text="@string/libraries"
+            app:layout_constraintEnd_toEndOf="@id/phones"
+            app:layout_constraintStart_toStartOf="@id/phones"
+            app:layout_constraintTop_toBottomOf="@id/phones" />
+
+        <ImageButton
+            android:id="@+id/computers"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/computers"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#20857c"
+            android:src="@drawable/computers"
+            app:layout_constraintBottom_toBottomOf="@id/phones"
+            app:layout_constraintStart_toEndOf="@id/phones"
+            app:layout_constraintTop_toTopOf="@id/phones" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/computers"
+            app:layout_constraintEnd_toEndOf="@id/computers"
+            app:layout_constraintStart_toStartOf="@id/computers"
+            app:layout_constraintTop_toBottomOf="@id/computers" />
+
+        <ImageButton
+            android:id="@+id/consumer"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/consumer_s_electroncis"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#20857c"
+            android:src="@drawable/consumer"
+            app:layout_constraintBottom_toBottomOf="@id/computers"
+            app:layout_constraintStart_toEndOf="@id/computers"
+            app:layout_constraintTop_toTopOf="@id/computers" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/consumer_s_electroncis"
+            app:layout_constraintEnd_toEndOf="@id/consumer"
+            app:layout_constraintStart_toStartOf="@id/consumer"
+            app:layout_constraintTop_toBottomOf="@id/consumer" />
+
+        <ImageButton
+            android:id="@+id/homeAppliances"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/home_appliances"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#20857c"
+            android:src="@drawable/homeappliances"
+            app:layout_constraintBottom_toBottomOf="@id/consumer"
+            app:layout_constraintStart_toEndOf="@id/consumer"
+            app:layout_constraintTop_toTopOf="@id/consumer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/home_appliances"
+            app:layout_constraintEnd_toEndOf="@id/homeAppliances"
+            app:layout_constraintStart_toStartOf="@id/homeAppliances"
+            app:layout_constraintTop_toBottomOf="@id/homeAppliances" />
+
+
+        <ImageButton
+            android:id="@+id/dvdShops"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/dvd_shops"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#20857c"
+            android:src="@drawable/dvdshops"
+            app:layout_constraintBottom_toBottomOf="@id/homeAppliances"
+            app:layout_constraintStart_toEndOf="@id/homeAppliances"
+            app:layout_constraintTop_toTopOf="@id/homeAppliances" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/dvd_shops"
+            app:layout_constraintEnd_toEndOf="@id/dvdShops"
+            app:layout_constraintStart_toStartOf="@id/dvdShops"
+            app:layout_constraintTop_toBottomOf="@id/dvdShops" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/healthAndBeautyHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/health_beauty"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phonesText" />
+
+        <ImageButton
+            android:id="@+id/pharmacies"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/pharmacies"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/pharmacies"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/healthAndBeautyHeader" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pharmacies"
+            android:id="@+id/pharmaciesText"
+            app:layout_constraintEnd_toEndOf="@id/pharmacies"
+            app:layout_constraintStart_toStartOf="@id/pharmacies"
+            app:layout_constraintTop_toBottomOf="@id/pharmacies" />
+
+
+        <ImageButton
+            android:id="@+id/gyms"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/gyms"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/gyms"
+            app:layout_constraintStart_toEndOf="@id/pharmacies"
+            app:layout_constraintTop_toBottomOf="@id/healthAndBeautyHeader" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/gyms"
+            app:layout_constraintEnd_toEndOf="@id/gyms"
+            app:layout_constraintStart_toStartOf="@id/gyms"
+            app:layout_constraintTop_toBottomOf="@id/gyms" />
+
+        <ImageButton
+            android:id="@+id/spas"
+            android:layout_width="55dp"
+            android:tag="@string/spas"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/spas"
+            app:layout_constraintStart_toEndOf="@id/gyms"
+            app:layout_constraintTop_toTopOf="@id/gyms"
+            app:layout_constraintBottom_toBottomOf="@id/gyms"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/spas"
+            app:layout_constraintEnd_toEndOf="@id/spas"
+            app:layout_constraintStart_toStartOf="@id/spas"
+            app:layout_constraintTop_toBottomOf="@id/spas" />
+
+        <ImageButton
+            android:id="@+id/barbers"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/barbers"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/barbers"
+            app:layout_constraintStart_toEndOf="@id/spas"
+            app:layout_constraintTop_toTopOf="@id/spas"
+            app:layout_constraintBottom_toBottomOf="@id/spas"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/barbers"
+            app:layout_constraintEnd_toEndOf="@id/barbers"
+            app:layout_constraintStart_toStartOf="@id/barbers"
+            app:layout_constraintTop_toBottomOf="@id/barbers" />
+        <ImageButton
+            android:id="@+id/tattoos"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/tattoo_shops"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/tattoos"
+            app:layout_constraintStart_toEndOf="@id/barbers"
+            app:layout_constraintTop_toTopOf="@id/barbers"
+            app:layout_constraintBottom_toBottomOf="@id/barbers"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tattoo_shops"
+            app:layout_constraintEnd_toEndOf="@id/tattoos"
+            app:layout_constraintStart_toStartOf="@id/tattoos"
+            app:layout_constraintTop_toBottomOf="@id/tattoos" />
+
+        <ImageButton
+            android:id="@+id/cosmetics"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:tag="@string/cosmetics"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:src="@drawable/cosmetics"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pharmaciesText" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:id="@+id/cosmeticsText"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/cosmetics"
+            app:layout_constraintEnd_toEndOf="@id/cosmetics"
+            app:layout_constraintStart_toStartOf="@id/cosmetics"
+            app:layout_constraintTop_toBottomOf="@id/cosmetics" />
+
+        <ImageButton
+            android:id="@+id/optometrists"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#2a8199"
+            android:tag="@string/optometrists"
+            android:src="@drawable/optometrists"
+            app:layout_constraintStart_toEndOf="@id/cosmetics"
+            app:layout_constraintTop_toTopOf="@id/cosmetics"
+            app:layout_constraintBottom_toBottomOf="@id/cosmetics"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/optometrists"
+            app:layout_constraintEnd_toEndOf="@id/optometrists"
+            app:layout_constraintStart_toStartOf="@id/optometrists"
+            app:layout_constraintTop_toBottomOf="@id/optometrists" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/vehiclesHeader"
+            style="@style/ph6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/vehicles"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cosmeticsText" />
+
+
+        <ImageButton
+            android:id="@+id/cars"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/cars"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/cars"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vehiclesHeader" />
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/carText"
+            android:gravity="center"
+            android:text="@string/cars"
+            app:layout_constraintEnd_toEndOf="@id/cars"
+            app:layout_constraintStart_toStartOf="@id/cars"
+            app:layout_constraintTop_toBottomOf="@id/cars" />
+        <ImageButton
+            android:id="@+id/stations"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:tag="@string/stations"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/stations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cars"
+            app:layout_constraintEnd_toEndOf="@id/cars"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/stationsText"
+            android:text="@string/stations"
+            app:layout_constraintEnd_toEndOf="@id/stations"
+            app:layout_constraintStart_toStartOf="@id/stations"
+            app:layout_constraintTop_toBottomOf="@id/stations" />
+        <ImageButton
+            android:id="@+id/motorcycles"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/motorcycles"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/motorcycles"
+            app:layout_constraintBottom_toBottomOf="@id/cars"
+            app:layout_constraintStart_toEndOf="@id/cars"
+            app:layout_constraintTop_toTopOf="@id/cars"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/motorcycles"
+            app:layout_constraintEnd_toEndOf="@id/motorcycles"
+            app:layout_constraintStart_toStartOf="@id/motorcycles"
+            app:layout_constraintTop_toBottomOf="@id/motorcycles" />
+
+        <ImageButton
+            android:id="@+id/parkingLots"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/parking_lots"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/parkinglots"
+            app:layout_constraintBottom_toBottomOf="@id/motorcycles"
+            app:layout_constraintStart_toEndOf="@id/motorcycles"
+            app:layout_constraintTop_toTopOf="@id/motorcycles"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/parking_lots"
+            app:layout_constraintEnd_toEndOf="@id/parkingLots"
+            app:layout_constraintStart_toStartOf="@id/parkingLots"
+            app:layout_constraintTop_toBottomOf="@id/parkingLots" />
+
+
+        <ImageButton
+            android:id="@+id/rental"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/rental"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/rental"
+            app:layout_constraintBottom_toBottomOf="@id/parkingLots"
+            app:layout_constraintStart_toEndOf="@id/parkingLots"
+            app:layout_constraintTop_toTopOf="@id/parkingLots"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/rental"
+            app:layout_constraintEnd_toEndOf="@id/rental"
+            app:layout_constraintStart_toStartOf="@id/rental"
+            app:layout_constraintTop_toBottomOf="@id/rental" />
+
+        <ImageButton
+            android:id="@+id/repairServices"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/repair_services"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#CD5C5C"
+            android:gravity="center"
+            android:src="@drawable/repairservices"
+            app:layout_constraintBottom_toBottomOf="@id/rental"
+            app:layout_constraintStart_toEndOf="@id/rental"
+            app:layout_constraintTop_toTopOf="@id/rental"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/repair_services"
+            app:layout_constraintEnd_toEndOf="@id/repairServices"
+            app:layout_constraintStart_toStartOf="@id/repairServices"
+            app:layout_constraintTop_toBottomOf="@id/repairServices" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/animalsHeader"
+            style="@style/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/animals"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stationsText" />
+
+        <ImageButton
+            android:id="@+id/vets"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:tag="@string/vets"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#8f6f7b"
+            android:gravity="center"
+            android:src="@drawable/vets"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/animalsHeader" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vetsText"
+            android:gravity="center"
+            android:text="@string/vets"
+            app:layout_constraintEnd_toEndOf="@id/vets"
+            app:layout_constraintStart_toStartOf="@id/vets"
+            app:layout_constraintTop_toBottomOf="@id/vets" />
+
+        <ImageButton
+            android:id="@+id/zoos"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/zoos"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#8f6f7b"
+            android:gravity="center"
+            android:src="@drawable/zoos"
+            app:layout_constraintBottom_toBottomOf="@id/vets"
+            app:layout_constraintStart_toEndOf="@id/vets"
+            app:layout_constraintTop_toTopOf="@id/vets"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/zoos"
+            app:layout_constraintEnd_toEndOf="@id/zoos"
+            app:layout_constraintStart_toStartOf="@id/zoos"
+            app:layout_constraintTop_toBottomOf="@id/zoos" />
+
+        <ImageButton
+            android:id="@+id/petStores"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/pet_stores"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#8f6f7b"
+            android:gravity="center"
+            android:src="@drawable/petstores"
+            app:layout_constraintBottom_toBottomOf="@id/zoos"
+            app:layout_constraintStart_toEndOf="@id/zoos"
+            app:layout_constraintTop_toTopOf="@id/zoos"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pet_stores"
+            app:layout_constraintEnd_toEndOf="@id/petStores"
+            app:layout_constraintStart_toStartOf="@id/petStores"
+            app:layout_constraintTop_toBottomOf="@id/petStores" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/retailHeader"
+            style="@style/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/retail"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vetsText" />
+
+        <ImageButton
+            android:id="@+id/groceries"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="15dp"
+            android:tag="@string/groceries"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#6b7888"
+            android:gravity="center"
+            android:src="@drawable/groceries"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/retailHeader" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/retail"
+            app:layout_constraintEnd_toEndOf="@id/groceries"
+            app:layout_constraintStart_toStartOf="@id/groceries"
+            app:layout_constraintTop_toBottomOf="@id/groceries" />
+
+
+        <ImageButton
+            android:id="@+id/oneDollarShops"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:tag="@string/_1_shops"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#6b7888"
+            android:gravity="center"
+            android:src="@drawable/onedollarshops"
+            app:layout_constraintStart_toEndOf="@id/groceries"
+            app:layout_constraintTop_toTopOf="@id/groceries"
+            app:layout_constraintBottom_toBottomOf="@id/groceries"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/_1_shops"
+            app:layout_constraintEnd_toEndOf="@id/oneDollarShops"
+            app:layout_constraintStart_toStartOf="@id/oneDollarShops"
+            app:layout_constraintTop_toBottomOf="@id/oneDollarShops" />
+
+        <ImageButton
+            android:id="@+id/superMarkets"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tag="@string/super_markets"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/sub_categories_button"
+            android:backgroundTint="#6b7888"
+            android:gravity="center"
+            android:src="@drawable/supermarket"
+            app:layout_constraintStart_toEndOf="@id/oneDollarShops"
+            app:layout_constraintTop_toTopOf="@id/oneDollarShops"
+            app:layout_constraintBottom_toBottomOf="@id/oneDollarShops"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/sb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/super_markets"
+            app:layout_constraintEnd_toEndOf="@id/superMarkets"
+            app:layout_constraintStart_toStartOf="@id/superMarkets"
+            app:layout_constraintTop_toBottomOf="@id/superMarkets" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

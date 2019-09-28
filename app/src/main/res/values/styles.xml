@@ -1,0 +1,75 @@
+<resources>
+
+
+    <style name="Theme.Kazdoura" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+
+
+
+
+    <style name="outlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">12sp</item>
+        <item name="backgroundTint">#fffffb</item>
+        <item name="strokeColor">@color/lighterTextColor</item>
+        <item name="strokeWidth">0.1dp</item>
+        <item name="elevation">4dp</item>
+        <item name="android:fontFamily">@font/fira_sans_condensed</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+
+    <style name="ph4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/fira_sans_condensed</item>
+    </style>
+
+    <style name="ph5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/fira_sans_condensed</item>
+    </style>
+
+    <style name="ph6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/fira_sans_condensed</item>
+    </style>
+
+    <style name="pb1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/fira_sans_condensed</item>
+    </style>
+
+    <style name="pb2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/fira_sans_condensed</item>
+    </style>
+
+
+    <style name="sh4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="sh5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="sh6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="sb1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="sb2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="sb3" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/josefin_sans</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_gradient"
+    tools:layout_editor_absoluteY="25dp">
+
+    <ImageView
+        android:id="@+id/treee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="25dp"
+        android:alpha="0.15"
+        android:scaleType="fitCenter"
+        android:src="@drawable/treee"
+        android:visibility="visible" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/smokyWhite"
+        android:alpha="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/laterSignIn"
+        app:layout_constraintTop_toTopOf="@id/laterSignIn"
+        app:layout_constraintBottom_toBottomOf="@id/laterSignIn"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/smokyWhite"
+        android:alpha="0.5"
+        app:layout_constraintStart_toEndOf="@id/laterSignIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/laterSignIn"
+        app:layout_constraintBottom_toBottomOf="@id/laterSignIn"/>
+    <TextView
+        android:id="@+id/laterSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/josefin_sans"
+        android:text="@string/i_ll_sign_in_later"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bFb"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="@string/facebook"
+        android:textColor="#ffffff"
+        app:icon="@drawable/facebook"
+        app:iconGravity="start"
+        app:iconSize="24dp"
+        app:iconTint="#ffffff"
+        app:layout_constraintTop_toTopOf="@id/guideline2"
+        app:strokeColor="#ffffff" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bEmail"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="@string/email"
+        android:textColor="#ffffff"
+        app:icon="@drawable/email"
+        app:iconGravity="start"
+        app:iconTint="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/bFb"
+        app:strokeColor="#ffffff" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bPhone"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="@string/phone"
+        android:textColor="#ffffff"
+        app:icon="@drawable/phones"
+        app:iconGravity="start"
+        app:iconSize="24dp"
+        app:iconTint="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/bEmail"
+        app:strokeColor="#ffffff" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register or Sign in:"
+        android:gravity="start"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/josefin_sans_semibold"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bFb"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
