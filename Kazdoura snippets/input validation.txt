@@ -1,0 +1,33 @@
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            username = etName.getText().toString();
+            password = etPassword.getText().toString();
+            email = etEmail.getText().toString();
+
+            bSignUp.setEnabled(password.length() >= 6 && !username.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+            bSignIn.setEnabled(password.length() >= 6 && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+
+            if (password.length() < 6 && password.length() > 0) {
+
+                passwordLayout.setError("password must be at least 6 characters");
+
+            } else {
+
+                passwordLayout.setError("");
+
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };

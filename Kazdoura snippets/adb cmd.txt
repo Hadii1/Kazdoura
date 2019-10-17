@@ -1,0 +1,3 @@
+adb shell ps | grep com.Czynt.kazdoura
+adb shell am force-stop com.Czynt.kazdoura
+C:\Users\hadih\AppData\Local\Android\Sdk\platform-tools>

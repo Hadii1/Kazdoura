@@ -1,0 +1,98 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Around.Around">
+
+
+    <include layout="@layout/back_layer" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frontLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/search_box"
+        android:elevation="2dp"
+        app:behavior_hideable="false"
+        app:layout_behavior="com.Czynt.kazdoura.BottomSheetLockedBehavior">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/locationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            style="@style/ph5"
+            android:text="--- Location ..."
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frontLayout" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:alpha="0.4"
+            android:background="@color/colorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/locationText" />
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:duration="700"
+            app:layout_constraintBottom_toBottomOf="@id/frontLayout"
+            app:layout_constraintEnd_toEndOf="@id/frontLayout"
+            app:layout_constraintStart_toStartOf="@id/frontLayout"
+            app:layout_constraintTop_toTopOf="@id/frontLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/cardview_placeholder" />
+
+                <include layout="@layout/cardview_placeholder" />
+
+                <include layout="@layout/cardview_placeholder" />
+
+                <include layout="@layout/cardview_placeholder" />
+
+                <include layout="@layout/cardview_placeholder" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAround"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="3dp"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/locationText" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

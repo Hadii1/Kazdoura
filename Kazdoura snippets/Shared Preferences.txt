@@ -1,0 +1,8 @@
+shared preferences:
+
+freshStart
+firstLaunch
+latitude
+longitude
+userLocation
+type

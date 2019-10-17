@@ -1,0 +1,580 @@
+package com.Czynt.kazdoura;
+
+import android.content.res.Resources;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class Around extends Fragment implements OnMapReadyCallback {
+    private static final String TAG = "AroundFragment";
+    private BottomSheetLockedBehavior behavior;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RecyclerView rvAround;
+    private ArrayList<CompoundButton> compoundButtonsArrayList;
+    private RecyclerView.Adapter aroundAdapter;
+    private ArrayList<Info> aroundDataArrayList;
+    private Button bApply;
+    private LinearLayout frontLayout;
+    private ImageButton ibExtend;
+    private RelativeLayout barLike;
+    private FloatingActionButton satelliteFab;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private TextView tvHeader;
+    private CoordinatorLayout coordinatorLayout;
+    private OnFragmentInteractionListener mListener;
+    private MapView mMapView;
+    private GoogleMap googleMap;
+    private static int b = 0;
+
+    public Around() {
+        // Required empty public constructor
+    }
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).navigate(
+                        R.id.action_Around_self2);
+                if (behavior.getState() == BottomSheetLockedBehavior.STATE_COLLAPSED) {
+                    behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+                    animateOpenClose(true);
+                }
+
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+    }
+
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        coordinatorLayout = (CoordinatorLayout) inflater.inflate(R.layout.around, container, false);
+
+        initViews(coordinatorLayout);
+
+        ListWork();
+        fixOffset();
+        applyChanges();
+
+        return coordinatorLayout;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "in onStart");
+        fixOffset();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "in onResume");
+
+        shimmerFrameLayout.startShimmerAnimation();
+
+    }
+
+    //Fragment is active here and user can interact with the ui
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+
+
+
+    private void initViews(CoordinatorLayout coordinatorLayout) {
+        ((Home) Objects.requireNonNull(getActivity(),"Activity should not equal null")).setNavVisibilitiy("VISIBLE");
+        mMapView = coordinatorLayout.findViewById(R.id.mapView);
+        shimmerFrameLayout = coordinatorLayout.findViewById(R.id.shimmer_view_container);
+        frontLayout = coordinatorLayout.findViewById(R.id.frontLayout);
+        tvHeader = coordinatorLayout.findViewById(R.id.headerTitle);
+        rvAround = coordinatorLayout.findViewById(R.id.rvAround);
+        bApply = coordinatorLayout.findViewById(R.id.bApply);
+        ibExtend = coordinatorLayout.findViewById(R.id.ibExtend);
+        satelliteFab = coordinatorLayout.findViewById(R.id.floating_action_button);
+        ImageButton ibSearch = coordinatorLayout.findViewById(R.id.ibSearch);
+        SwitchMaterial mapToggle = coordinatorLayout.findViewById(R.id.mapToggle);
+
+        compoundButtonsArrayList = new ArrayList<>();
+        aroundDataArrayList = new ArrayList<>();
+
+        rvAround.setHasFixedSize(true);
+        rvAround.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        aroundAdapter = new aroundAdapter(getActivity(), aroundDataArrayList);
+        aroundAdapter.setHasStableIds(true);
+        rvAround.setAdapter(aroundAdapter);
+
+
+        behavior = (BottomSheetLockedBehavior) BottomSheetLockedBehavior.from(frontLayout);
+        behavior.setHideable(false);
+
+
+        setUpToggleButtons(coordinatorLayout);
+
+        bApply.setOnClickListener(v -> applyChanges());
+
+
+        ibSearch.setOnClickListener(v -> {
+            //TODO;
+        });
+
+
+      ibExtend.setOnClickListener(v -> {
+            if(behavior.getState() == BottomSheetLockedBehavior.STATE_EXPANDED){
+                behavior.setState(BottomSheetLockedBehavior.STATE_COLLAPSED);
+                animateOpenClose(false);
+            }
+
+            if(behavior.getState() == BottomSheetLockedBehavior.STATE_COLLAPSED){
+                behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+                animateOpenClose(true);
+            }
+      });
+
+
+        mapToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MapWork();
+
+            } else {
+                ListWork();
+            }
+        });
+
+
+        satelliteFab.setOnClickListener(v -> {
+            if (googleMap.getMapType() == 1) {
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            } else {
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            }
+
+        });
+
+        behavior.setBottomSheetCallback(new BottomSheetLockedBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.d(TAG, "behavior new state: " + newState +
+                        " and peak height is: " + behavior.getPeekHeight());
+                if (newState == BottomSheetLockedBehavior.STATE_DRAGGING) {
+                    behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+                }
+                if (newState == BottomSheetLockedBehavior.STATE_HIDDEN) {
+                    behavior.setState((BottomSheetLockedBehavior.STATE_COLLAPSED));
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+    private void setUpToggleButtons(CoordinatorLayout coordinatorLayout) {
+        //Set the listener for all the sub_categories buttons
+
+        CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            if (isChecked) {
+                Log.d(TAG, "" + buttonView.getText().toString() + " is checked");
+                b++;
+                if (b == 1) {
+                    bApply.setVisibility(View.VISIBLE);
+                    bApply.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.activity_fade_in));
+                }
+            }
+            if (!isChecked) {
+                b++;
+                Log.d(TAG, "" + buttonView.getText().toString() + " is unchecked");
+                if (b == 1) {
+                    bApply.setVisibility(View.VISIBLE);
+                    bApply.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.activity_fade_in));
+                }
+            }
+        };
+
+        ToggleButton restaurants = coordinatorLayout.findViewById(R.id.restaurants);
+        ToggleButton snacks = coordinatorLayout.findViewById(R.id.snacks);
+        ToggleButton bakeries = coordinatorLayout.findViewById(R.id.bakeries);
+        ToggleButton sweets = coordinatorLayout.findViewById(R.id.sweets);
+        ToggleButton juices = coordinatorLayout.findViewById(R.id.juices);
+        ToggleButton iceCream = coordinatorLayout.findViewById(R.id.iceCream);
+        ToggleButton liquor = coordinatorLayout.findViewById(R.id.liquor);
+        ToggleButton seaFood = coordinatorLayout.findViewById(R.id.seaFood);
+        ToggleButton cafes = coordinatorLayout.findViewById(R.id.cafes);
+        ToggleButton bars = coordinatorLayout.findViewById(R.id.bars);
+        ToggleButton lounges = coordinatorLayout.findViewById(R.id.lounges);
+        ToggleButton funParks = coordinatorLayout.findViewById(R.id.funParks);
+        ToggleButton beachResorts = coordinatorLayout.findViewById(R.id.beachResorts);
+        ToggleButton clubs = coordinatorLayout.findViewById(R.id.clubs);
+        ToggleButton pubs = coordinatorLayout.findViewById(R.id.pubs);
+        ToggleButton libraries = coordinatorLayout.findViewById(R.id.libraries);
+        ToggleButton musicStores = coordinatorLayout.findViewById(R.id.musicStores);
+        ToggleButton musicStudios = coordinatorLayout.findViewById(R.id.musicStudios);
+        ToggleButton artGalleries = coordinatorLayout.findViewById(R.id.artGalleries);
+        ToggleButton photographyStudios = coordinatorLayout.findViewById(R.id.photographyStudios);
+        ToggleButton clothing = coordinatorLayout.findViewById(R.id.clothing);
+        ToggleButton jewellery = coordinatorLayout.findViewById(R.id.jewellery);
+        ToggleButton accessories = coordinatorLayout.findViewById(R.id.accessories);
+        ToggleButton perfumes = coordinatorLayout.findViewById(R.id.perfumes);
+        ToggleButton watches = coordinatorLayout.findViewById(R.id.watches);
+        ToggleButton phones = coordinatorLayout.findViewById(R.id.phones);
+        ToggleButton computers = coordinatorLayout.findViewById(R.id.computers);
+        ToggleButton consumer = coordinatorLayout.findViewById(R.id.consumer);
+        ToggleButton dvdShops = coordinatorLayout.findViewById(R.id.dvdShops);
+        ToggleButton homeAppliances = coordinatorLayout.findViewById(R.id.homeAppliances);
+        ToggleButton pharmacies = coordinatorLayout.findViewById(R.id.pharmacies);
+        ToggleButton gyms = coordinatorLayout.findViewById(R.id.gyms);
+        ToggleButton barbers = coordinatorLayout.findViewById(R.id.barbers);
+        ToggleButton tattooShops = coordinatorLayout.findViewById(R.id.tattoo);
+        ToggleButton spas = coordinatorLayout.findViewById(R.id.spas);
+        ToggleButton cosmetics = coordinatorLayout.findViewById(R.id.cosmetics);
+        ToggleButton optometrists = coordinatorLayout.findViewById(R.id.optometrists);
+        ToggleButton stations = coordinatorLayout.findViewById(R.id.stations);
+        ToggleButton parkingLots = coordinatorLayout.findViewById(R.id.parkingLots);
+        ToggleButton rental = coordinatorLayout.findViewById(R.id.rental);
+        ToggleButton cars = coordinatorLayout.findViewById(R.id.cars);
+        ToggleButton motorcycles = coordinatorLayout.findViewById(R.id.motorcycles);
+        ToggleButton repairServices = coordinatorLayout.findViewById(R.id.repairServices);
+        ToggleButton petStores = coordinatorLayout.findViewById(R.id.petStores);
+        ToggleButton vets = coordinatorLayout.findViewById(R.id.vets);
+        ToggleButton zoos = coordinatorLayout.findViewById(R.id.zoos);
+        ToggleButton groceries = coordinatorLayout.findViewById(R.id.groceries);
+        ToggleButton superMarkets = coordinatorLayout.findViewById(R.id.superMarkets);
+        ToggleButton oneDollarShops = coordinatorLayout.findViewById(R.id.onedollarshops);
+
+
+        restaurants.setOnCheckedChangeListener(listener);
+        snacks.setOnCheckedChangeListener(listener);
+        bakeries.setOnCheckedChangeListener(listener);
+        sweets.setOnCheckedChangeListener(listener);
+        juices.setOnCheckedChangeListener(listener);
+        iceCream.setOnCheckedChangeListener(listener);
+        liquor.setOnCheckedChangeListener(listener);
+        seaFood.setOnCheckedChangeListener(listener);
+        cafes.setOnCheckedChangeListener(listener);
+        bars.setOnCheckedChangeListener(listener);
+        lounges.setOnCheckedChangeListener(listener);
+        funParks.setOnCheckedChangeListener(listener);
+        beachResorts.setOnCheckedChangeListener(listener);
+        clubs.setOnCheckedChangeListener(listener);
+        pubs.setOnCheckedChangeListener(listener);
+        libraries.setOnCheckedChangeListener(listener);
+        musicStores.setOnCheckedChangeListener(listener);
+        musicStudios.setOnCheckedChangeListener(listener);
+        artGalleries.setOnCheckedChangeListener(listener);
+        photographyStudios.setOnCheckedChangeListener(listener);
+        clothing.setOnCheckedChangeListener(listener);
+        jewellery.setOnCheckedChangeListener(listener);
+        accessories.setOnCheckedChangeListener(listener);
+        perfumes.setOnCheckedChangeListener(listener);
+        watches.setOnCheckedChangeListener(listener);
+        phones.setOnCheckedChangeListener(listener);
+        computers.setOnCheckedChangeListener(listener);
+        consumer.setOnCheckedChangeListener(listener);
+        dvdShops.setOnCheckedChangeListener(listener);
+        homeAppliances.setOnCheckedChangeListener(listener);
+        pharmacies.setOnCheckedChangeListener(listener);
+        gyms.setOnCheckedChangeListener(listener);
+        barbers.setOnCheckedChangeListener(listener);
+        tattooShops.setOnCheckedChangeListener(listener);
+        spas.setOnCheckedChangeListener(listener);
+        cosmetics.setOnCheckedChangeListener(listener);
+        optometrists.setOnCheckedChangeListener(listener);
+        stations.setOnCheckedChangeListener(listener);
+        parkingLots.setOnCheckedChangeListener(listener);
+        rental.setOnCheckedChangeListener(listener);
+        cars.setOnCheckedChangeListener(listener);
+        motorcycles.setOnCheckedChangeListener(listener);
+        repairServices.setOnCheckedChangeListener(listener);
+        petStores.setOnCheckedChangeListener(listener);
+        vets.setOnCheckedChangeListener(listener);
+        zoos.setOnCheckedChangeListener(listener);
+        groceries.setOnCheckedChangeListener(listener);
+        superMarkets.setOnCheckedChangeListener(listener);
+        oneDollarShops.setOnCheckedChangeListener(listener);
+
+
+        compoundButtonsArrayList.add(restaurants);
+        compoundButtonsArrayList.add(snacks);
+        compoundButtonsArrayList.add(bakeries);
+        compoundButtonsArrayList.add(sweets);
+        compoundButtonsArrayList.add(juices);
+        compoundButtonsArrayList.add(iceCream);
+        compoundButtonsArrayList.add(liquor);
+        compoundButtonsArrayList.add(seaFood);
+        compoundButtonsArrayList.add(cafes);
+        compoundButtonsArrayList.add(bars);
+        compoundButtonsArrayList.add(lounges);
+        compoundButtonsArrayList.add(funParks);
+        compoundButtonsArrayList.add(beachResorts);
+        compoundButtonsArrayList.add(clubs);
+        compoundButtonsArrayList.add(pubs);
+        compoundButtonsArrayList.add(libraries);
+        compoundButtonsArrayList.add(musicStores);
+        compoundButtonsArrayList.add(musicStores);
+        compoundButtonsArrayList.add(artGalleries);
+        compoundButtonsArrayList.add(photographyStudios);
+        compoundButtonsArrayList.add(clothing);
+        compoundButtonsArrayList.add(jewellery);
+        compoundButtonsArrayList.add(accessories);
+        compoundButtonsArrayList.add(watches);
+        compoundButtonsArrayList.add(perfumes);
+        compoundButtonsArrayList.add(phones);
+        compoundButtonsArrayList.add(consumer);
+        compoundButtonsArrayList.add(computers);
+        compoundButtonsArrayList.add(dvdShops);
+        compoundButtonsArrayList.add(homeAppliances);
+        compoundButtonsArrayList.add(pharmacies);
+        compoundButtonsArrayList.add(gyms);
+        compoundButtonsArrayList.add(barbers);
+        compoundButtonsArrayList.add(tattooShops);
+        compoundButtonsArrayList.add(spas);
+        compoundButtonsArrayList.add(cosmetics);
+        compoundButtonsArrayList.add(optometrists);
+        compoundButtonsArrayList.add(stations);
+        compoundButtonsArrayList.add(parkingLots);
+        compoundButtonsArrayList.add(rental);
+        compoundButtonsArrayList.add(cars);
+        compoundButtonsArrayList.add(motorcycles);
+        compoundButtonsArrayList.add(repairServices);
+        compoundButtonsArrayList.add(petStores);
+        compoundButtonsArrayList.add(vets);
+        compoundButtonsArrayList.add(zoos);
+        compoundButtonsArrayList.add(groceries);
+        compoundButtonsArrayList.add(superMarkets);
+        compoundButtonsArrayList.add(oneDollarShops);
+
+
+    }
+
+
+    private void applyChanges() {
+        Log.d(TAG, "Apply changes: ");
+        animateOpenClose(true);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+        aroundDataArrayList.clear();
+
+        for (CompoundButton compoundButton : compoundButtonsArrayList) {
+
+            if (compoundButton.isChecked()) {
+
+                String buttonText = compoundButton.getText().toString();
+                Log.d(TAG, buttonText + " is checked in the for loop");
+                db.collection("Stores").whereEqualTo("type", buttonText).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Success getting data");
+                        for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())) {
+                            Info info = documentSnapshot.toObject(Info.class);
+                            Log.d(TAG, "name is : " + info.getName());
+                            aroundDataArrayList.add(info);
+
+                        }
+                        shimmerFrameLayout.stopShimmerAnimation();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        aroundAdapter.notifyDataSetChanged();
+                        Log.d(TAG, "The array size: " + aroundDataArrayList.size());
+                    } else {
+                        Log.d(TAG, "Error getting data: " + task.getException());
+                    }
+                });
+
+            }
+        }
+
+        b = 0;
+        behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+        bApply.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
+        bApply.setVisibility(View.GONE);
+    }
+
+    private void fixOffset() {
+        Log.d(TAG, "in fixOffset");
+        BottomNavigationView nav = Objects.requireNonNull(getActivity()).findViewById(R.id.bottom_navigation);
+
+        frontLayout.post(() -> {
+            nav.setVisibility(View.VISIBLE);
+            int height = coordinatorLayout.getMeasuredHeight();
+            int height1 = barLike.getMeasuredHeight();
+            Log.d(TAG, "Coordinator layout measured height is " + height + " relative barLike is " + height1);
+            ViewGroup.LayoutParams params = frontLayout.getLayoutParams();
+            params.height = height - height1;
+            frontLayout.setLayoutParams(params);
+            behavior.setExpandedOffset(height - height1);
+            behavior.setPeekHeight(height1);
+            behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+        });
+
+
+    }
+
+
+    private void setExtendClickBehavior() {
+
+
+        if (behavior.getState() == BottomSheetLockedBehavior.STATE_EXPANDED) {
+            behavior.setState(BottomSheetLockedBehavior.STATE_COLLAPSED);
+
+        } else if (behavior.getState() == BottomSheetLockedBehavior.STATE_COLLAPSED) {
+            behavior.setState(BottomSheetLockedBehavior.STATE_EXPANDED);
+
+        }
+    }
+
+
+    private void MapWork() {
+        tvHeader.setText("Map");
+
+        rvAround.setVisibility(View.GONE);
+        mMapView.setVisibility(View.VISIBLE);
+        satelliteFab.setVisibility(View.VISIBLE);
+        satelliteFab.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.activity_fade_in));
+        if (mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
+    }
+
+    private void ListWork() {
+        tvHeader.setText("List");
+        mMapView.setVisibility(View.GONE);
+        satelliteFab.setVisibility(View.GONE);
+        rvAround.setVisibility(View.VISIBLE);
+    }
+
+    private void animateOpenClose(boolean closing) {
+        if (closing) {
+            ibExtend.setImageDrawable(getResources().getDrawable(R.drawable.extend_close_animation));
+            AnimatedVectorDrawable animation = (AnimatedVectorDrawable) ibExtend.getDrawable();
+            animation.start();
+        } else {
+            ibExtend.setImageDrawable(getResources().getDrawable(R.drawable.close_extend_animation));
+            AnimatedVectorDrawable animation = (AnimatedVectorDrawable) ibExtend.getDrawable();
+            animation.start();
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(Objects.requireNonNull(getContext()));
+        this.googleMap = googleMap;
+
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        LatLng Lebanon = new LatLng(33.888630, 35.495480);
+        googleMap.addMarker(new MarkerOptions().position(Lebanon).title("Marker Title").snippet("Marker Description"));
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getContext(), R.raw.map_styled));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+        // For zooming automatically to the location of the marker
+
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(Lebanon).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
+    }
+
+
+}
+

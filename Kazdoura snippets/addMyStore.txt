@@ -1,0 +1,11 @@
+Add my store: 
+
+1- Store name
+2- location 
+3- category ---> type 
+4- timing
+5- attributes
+6- images
+7- A front description
+8- payment
+

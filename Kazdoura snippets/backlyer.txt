@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/backLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:elevation="0dp"
+    android:padding="2dp">
+
+    <ImageButton
+        android:id="@+id/ibExtend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/reveal_and_hide_the_backlayer"
+        android:src="@drawable/menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/search"
+        android:src="@drawable/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/mapToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:drawableStart="@drawable/map_cursor"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/acme"
+        android:showText="true"
+        android:text="@string/map_view"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mapToggle" />
+
+
+    <ScrollView
+        android:id="@+id/svBackLayer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="60dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+
+        <LinearLayout
+            android:id="@+id/clBackLayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/acme"
+                android:text="@string/only_show"
+                android:textColor="#ffffff"
+                app:fontFamily="@font/acme" />
+
+
+            <com.google.android.material.textbview.MaterialTextView
+                android:id="@+id/food"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@drawable/food"
+                android:drawablePadding="10dp"
+                android:text="@string/food"
+                android:textColor="#ffffff" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/restaurants"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="true"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/restaurants"
+                        android:textOn="@string/restaurants" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/snacks"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/snacks"
+                        android:textOn="@string/snacks" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/bakeries"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/bakeries"
+                        android:textOn="@string/bakeries" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/sweets"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/sweets"
+                        android:textOn="@string/sweets" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/juices"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/juices"
+                        android:textOn="@string/juices" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/iceCream"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/ice_cream"
+                        android:textOn="@string/ice_cream" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/liquor"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/liquor"
+                        android:textOn="@string/liquor" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/seaFood"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/sea_food"
+                        android:textOn="@string/sea_food" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Entertainment"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@drawable/entertainment"
+                android:drawablePadding="10dp"
+                android:text="@string/entertainment"
+                android:textColor="#ffffff" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/cafes"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/caffes"
+                        android:textOn="@string/caffes" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/bars"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/bars"
+                        android:textOn="@string/bars" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/lounges"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/lounges"
+                        android:textOn="@string/lounges" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/funParks"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/fun_parks"
+                        android:textOn="@string/fun_parks" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/beachResorts"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/beach_resorts"
+                        android:textOn="@string/beach_resorts" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/pubs"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/pubs"
+                        android:textOn="@string/pubs" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/clubs"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/clubs"
+                        android:textOn="@string/clubs" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/artsAndBooks"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/art"
+                android:drawablePadding="10dp"
+                android:text="@string/arts_and_books"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/libraries"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/libraries"
+                        android:textOn="@string/libraries" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/musicStores"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/musical_stores"
+                        android:textOn="@string/musical_stores" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/musicStudios"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/music_studios"
+                        android:textOn="@string/music_studios" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/artGalleries"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/art_galleries"
+                        android:textOn="@string/art_galleries" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/photographyStudios"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/photography_studios"
+                        android:textOn="@string/photography_studios" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fashion"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/fashion"
+                android:drawablePadding="10dp"
+                android:text="@string/fashion"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/clothing"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/clothing"
+                        android:textOn="@string/clothing" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/jewellery"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/jewellery"
+                        android:textOn="@string/jewellery" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/accessories"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/accessories"
+                        android:textOn="@string/accessories" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/perfumes"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/perfumes"
+                        android:textOn="@string/perfumes" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/watches"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/watches"
+                        android:textOn="@string/watches" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/electronics"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/electronics"
+                android:drawablePadding="10dp"
+                android:text="@string/electronics"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/phones"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/phones"
+                        android:textOn="@string/phones" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/computers"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/computers"
+                        android:textOn="@string/computers" />
+
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/consumer"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/consumer_s_electroncis"
+                        android:textOn="@string/consumer_s_electroncis" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/homeAppliances"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/home_appliances"
+                        android:textOn="@string/home_appliances" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/dvdShops"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/dvd_shops"
+                        android:textOn="@string/dvd_shops" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/healthAndBeauty"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/health_and_beauty"
+                android:drawablePadding="10dp"
+                android:text="@string/health_beauty"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/pharmacies"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/pharmacies"
+                        android:textOn="@string/pharmacies" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/gyms"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/gyms"
+                        android:textOn="@string/gyms" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/barbers"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/barbers"
+                        android:textOn="@string/barbers" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/tattoo"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/tattoo_shops"
+                        android:textOn="@string/tattoo_shops" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/cosmetics"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/cosmetics"
+                        android:textOn="@string/cosmetics" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/optometrists"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/optometrists"
+                        android:textOn="@string/optometrists" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/spas"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/spas"
+                        android:textOn="@string/spas" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/vehicles"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/vehicles"
+                android:drawablePadding="10dp"
+                android:text="@string/vehicles"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/stations"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/stations"
+                        android:textOn="@string/stations" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/parkingLots"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/parking_lots"
+                        android:textOn="@string/parking_lots" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/cars"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/cars"
+                        android:textOn="@string/cars" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/motorcycles"
+                        style="@style/sb1"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/motorcycles"
+                        android:textOn="@string/motorcycles" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/repairServices"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/repair_services"
+                        android:textOn="@string/repair_services" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/rental"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/rental"
+                        android:textOn="@string/rental" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/animals"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/animals"
+                android:drawablePadding="10dp"
+                android:text="@string/animals"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/petStores"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/pet_stores"
+                        android:textOn="@string/pet_stores" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/vets"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/vets"
+                        android:textOn="@string/vets" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/zoos"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/zoos"
+                        android:textOn="@string/zoos" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:alpha="0.8"
+                android:background="@android:color/darker_gray" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/retail"
+                style="@style/ph5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/retail"
+                android:drawablePadding="10dp"
+                android:text="@string/retail"
+                android:textColor="#ffffff"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/groceries"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/groceries"
+                        android:textOn="@string/groceries" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/superMarkets"
+                        style="@style/sb1"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/super_markets"
+                        android:textOn="@string/super_markets" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/onedollarshops"
+                        style="@style/sb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/sub_categories_button"
+                        android:checked="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textOff="@string/_1_shops"
+                        android:textOn="@string/_1_shops" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bApply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:text="@string/apply_changes"
+        android:visibility="invisible"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

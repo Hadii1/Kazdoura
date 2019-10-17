@@ -1,0 +1,9 @@
+1-food:snacks/bakeries/sweets/groceries/alcohol/juice/ice cream.
+2-Entertainment: caffes/lounges/beach resorts/fun parks/night life/dvd shops
+3-arts & books: musical stores/libraries/musical studios/photo studios/art galleries/optimetries(optics)
+4-health & beauty: barbers//cosmetics/perfumes/gym/pharmacies/spas/tattoo shops
+5-fashion:men's clothing/woman's clothing/babies/shoes/accessories/tailors/jewellery
+6-vehicles: cars/moto/stations/repair services/rental
+7-electronics: phones/computers/consumer electronics
+8-home: galleries/ home equipment
+9-pets: pet stores/vets

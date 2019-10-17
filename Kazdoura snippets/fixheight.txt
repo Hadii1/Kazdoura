@@ -1,0 +1,15 @@
+  Log.d(TAG, "in fixHeight");
+        nav.post(new Runnable() {
+            @Override
+            public void run() {
+
+                int height = nav.getMeasuredHeight();
+                Log.d(TAG,"height of the nav bar: " + height);
+                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        ConstraintLayout.LayoutParams.MATCH_PARENT
+                );
+                params.setMargins(0, 0, 0, height);
+                fragmentConstraint.setLayoutParams(params);
+            }
+        });

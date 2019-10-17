@@ -1,0 +1,18 @@
+ View v=  inflater.inflate(R.layout.profile, container, false);
+        db = FirebaseFirestore.getInstance();
+        pp = v.findViewById(R.id.profilePhoto);
+        mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getUid();
+        specificUserDoc = db.collection("Users").document(Objects.requireNonNull(userId));
+        specificUserDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    String url = documentSnapshot.getString("Profile photo");
+                    Log.d(TAG,""+url);
+                    Picasso.get().load(url).into(pp);
+                }
+
+            }
+        });
+        return v;

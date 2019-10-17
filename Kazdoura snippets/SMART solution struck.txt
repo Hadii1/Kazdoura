@@ -1,0 +1,1 @@
+add the toolbar to the activity. set the visibility to gone. get from the fragment and attach the backrop to it. anddddddddddddddddd get the theme from the styles to material.dark.actionbar presentttt
