@@ -1,93 +1,126 @@
 package com.Czynt.kazdoura.Find;
 
+import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.Czynt.kazdoura.Store;
+import com.Czynt.kazdoura.Utils.GeoCoderUseCase;
+import com.Czynt.kazdoura.Utils.SharedPreferencesUtil;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.imperiumlabs.geofirestore.GeoFirestore;
+import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 
-class FindModel {
+import javax.inject.Inject;
 
-    private FirebaseFirestore db;
-    private static final String TAG = "FindModel";
+public class FindModel {
+
+
+    private static final String TAG = "MainModel";
     private final ArrayList<Store> stores = new ArrayList<>();
-    private static FindModel findModel;
-    private OnStoresQueryCallback callback;
+    private final SharedPreferencesUtil prefs;
+    private final FirebaseFirestore db;
+    private String exception;
+    private final GeoCoderUseCase geoCoder;
+    private final MutableLiveData<ArrayList<Store>> data = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> failed = new MutableLiveData<>();
+    private final MutableLiveData<String> address = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isUpdating = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> noStores = new MutableLiveData<>();
 
-    synchronized static FindModel getInstance() {
 
-        if (findModel == null) {
-            findModel = new FindModel();
-        }
-        return findModel;
+    @Inject
+    public FindModel(FirebaseFirestore db, SharedPreferencesUtil prefs,GeoCoderUseCase useCase) {
+        this.geoCoder = useCase;
+        this.prefs = prefs;
+        this.db = db;
+
+        Log.d(TAG, "FindModel: "+ this);
+
     }
 
-    private FindModel() {
+//    public static synchronized MainModel getInstance() {
+//        if (model == null) {
+//            model = new MainModel();
+//        }
+//        return model;
+//    }
 
-        db = FirebaseFirestore.getInstance();
 
-    }
+    LiveData<ArrayList<Store>> getStores(String type) {
 
-
-    void getStores(String type, OnStoresQueryCallback callback) {
-
-        this.callback = callback;
-
-        final MutableLiveData<ArrayList<Store>> data = new MutableLiveData<>();
-
-        if (data.getValue() != null) {
-
-            data.getValue().clear();
-
-        }
-
+        isUpdating.setValue(true);
         stores.clear();
 
+        Task<QuerySnapshot> task = db.collection("Stores").whereEqualTo("type", type).limit(25).get(Source.SERVER);
 
-        Task<QuerySnapshot> task = db.collection("Stores").whereEqualTo("type", type).limit(30).get();
-        task.addOnSuccessListener(queryDocumentSnapshots -> {
+        task.addOnCompleteListener(task1 -> {
 
-            Log.d(TAG, "getStores Success");
+            isUpdating.setValue(false);
+            assert task1.getResult() != null;
 
-            for (QueryDocumentSnapshot qds : queryDocumentSnapshots) {
+            if (task1.isSuccessful()) {
 
-                Store store = qds.toObject(Store.class);
+                for (QueryDocumentSnapshot queryDocumentSnapshot : task1.getResult()) {
+                    Store store = queryDocumentSnapshot.toObject(Store.class);
+                    stores.add(store);
+                }
+                if (stores.size() == 0) {
+                    noStores.setValue(true);
+                }
+                data.setValue(stores);
 
-                stores.add(store);
+            } else {
+
+                if (task1.getException() instanceof FirebaseNetworkException) {
+                    exception = "Poor Internet Connection";
+                } else {
+                    exception = "Error Loading data";
+                }
+
+                data.setValue(new ArrayList<>());
+                failed.setValue(true);
 
             }
-            //The following is done on the main thread
-
-            data.setValue(stores);
-
-            this.callback.getStoresSuccess(data);
-
         });
 
-        task.addOnFailureListener(e -> this.callback.getStoresFailed());
-
+        return data;
 
     }
 
-    void clearReference() {
-        if (this.callback != null) {
-            this.callback = null;
-        }
+    public String getException() {
+        return exception;
+    }
+
+    LiveData<Boolean> getNoStores() {
+        return noStores;
+    }
+
+    LiveData<Boolean> getFailed() {
+        return failed;
+    }
+
+    LiveData<Boolean> getIsUpdating() {
+        return isUpdating;
+    }
+
+    LiveData<String> getCityName() {
+        return address;
     }
 
 
-    interface OnStoresQueryCallback {
+    void fetchAddress(Context context, double latitude, double longitude) {
 
-        void getStoresSuccess(MutableLiveData<ArrayList<Store>> stores);
+        address.postValue(geoCoder.fetchAddress(latitude, longitude));
 
-        void getStoresFailed();
     }
+
+
 }

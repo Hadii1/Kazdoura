@@ -1,5 +1,6 @@
 package com.Czynt.kazdoura.Login.EmailAuth;
 
+import com.Czynt.kazdoura.Utils.SingleLiveEvent;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -10,65 +11,47 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-class EmailLoginModel {
+import javax.inject.Inject;
+
+public class EmailAuthModel {
 
 
-    interface OnAuthenticationResult {
+    private SingleLiveEvent<Boolean> isUpdating = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> registerSuccess = new SingleLiveEvent<>();
+    private String exception;
+    private final FirebaseFirestore db;
+    private final FirebaseAuth mAuth;
 
-        void signInFailed(String exception);
-
-        void processSuccess();
-
-        void registerFailed(String exception);
-    }
-
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    private OnAuthenticationResult listener;
-    private static EmailLoginModel model;
-
-
-    static synchronized EmailLoginModel getInstance() {
-        if (model == null) {
-            model = new EmailLoginModel();
-        }
-        return model;
-    }
-
-    private EmailLoginModel() {
-        if (mAuth == null) {
-            mAuth = FirebaseAuth.getInstance();
-        }
-
-        if (db == null) {
-            db = FirebaseFirestore.getInstance();
-        }
-
-
+    @Inject
+    public EmailAuthModel(FirebaseFirestore db, FirebaseAuth mAuth) {
+        this.db = db;
+        this.mAuth = mAuth;
     }
 
 
-    void createNewUser(String email, String password, String userName, OnAuthenticationResult listener) {
+    void createNewUser(String email, String password, String userName) {
 
-        this.listener = listener;
+        isUpdating.setValue(true);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {
 
+            isUpdating.setValue(false);
+
             if (task1.isSuccessful()) {
                 saveUserData(userName);
-                listener.processSuccess();
+                registerSuccess.setValue(true);
 
             } else {
-                String s;
+
                 if (task1.getException() instanceof FirebaseAuthInvalidUserException) {
-                    s = ("Invalid Information");
+                    exception = ("Invalid Information");
                 } else if (task1.getException() instanceof FirebaseNetworkException) {
-                    s = ("Poor Internet Connection");
+                    exception = ("Poor Internet Connection");
                 } else {
-                    s = ("An error occurred, Try again.");
+                    exception = ("An error occurred, Try again.");
                 }
 
-                listener.registerFailed(s);
+                registerSuccess.setValue(false);
 
 
             }
@@ -76,27 +59,28 @@ class EmailLoginModel {
     }
 
 
-    void signInExistingUser(String email, String password, OnAuthenticationResult listener) {
+    void signInExistingUser(String email, String password) {
 
-        this.listener = listener;
+        isUpdating.setValue(true);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {
 
+            isUpdating.setValue(false);
+
             if (task1.isSuccessful()) {
-                listener.processSuccess();
+                registerSuccess.setValue(true);
             } else {
 
-                String s;
 
                 if (task1.getException() instanceof FirebaseNetworkException) {
-                    s = ("Poor Connectivity");
+                    exception = ("Poor Connectivity");
                 } else if (task1.getException() instanceof FirebaseAuthUserCollisionException) {
-                    s = ("An account already exists with this email address");
+                    exception = ("An account already exists with this email address");
 
                 } else {
-                    s = ("An Error occurred, Try again.");
+                    exception = ("An Error occurred, Try again.");
                 }
-                listener.signInFailed(s);
+                registerSuccess.setValue(false);
 
             }
         });
@@ -107,6 +91,7 @@ class EmailLoginModel {
     private void saveUserData(String userName) {
 
         FirebaseUser user = mAuth.getCurrentUser();
+
         if (user != null) {
 
             Map<String, Object> userInfo = new HashMap<>();
@@ -121,10 +106,17 @@ class EmailLoginModel {
     }
 
 
-    void clearReference() {
-        if (listener != null) {
-            listener = null;
-        }
+    String getException() {
+        return exception;
     }
+
+    SingleLiveEvent<Boolean> getIsUpdating() {
+        return isUpdating;
+    }
+
+    SingleLiveEvent<Boolean> getRegisterSuccess() {
+        return registerSuccess;
+    }
+
 
 }

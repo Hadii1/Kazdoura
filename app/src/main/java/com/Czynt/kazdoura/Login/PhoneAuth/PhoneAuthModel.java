@@ -3,8 +3,10 @@ package com.Czynt.kazdoura.Login.PhoneAuth;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.Czynt.kazdoura.Home;
+import com.Czynt.kazdoura.Utils.SingleLiveEvent;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,57 +16,40 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-class PhoneAuthModel {
+import javax.inject.Inject;
+import javax.inject.Named;
 
+public class PhoneAuthModel {
 
-    interface CallbacksFinished {
-
-
-        void verificationFailed(String s);
-
-        void registerSuccess();
-
-        void registerFailed(String s);
-
-        void CodeSent(String verificationId);
-    }
 
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private String mVerificationId;
-    private FirebaseAuth mAuth;
-    private CallbacksFinished viewModelListener;
-    private static  PhoneAuthModel model;
     private static final String TAG = "PhoneAuthModel";
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private Home home;
+    private SingleLiveEvent <Boolean> codeSent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> verificationFailed = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> registrationSuccess = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> isUpdating = new SingleLiveEvent<>();
+    private String exception;
+    private FirebaseAuth mAuth;
 
-    static synchronized PhoneAuthModel getInstance() {
-        if (model == null) {
-            model = new PhoneAuthModel();
-        }
-        return model;
-    }
 
 
-    private PhoneAuthModel() {
+    @Inject
+    public PhoneAuthModel(FirebaseAuth mAuth,@Named("home") Home home) {
 
-        if (mAuth == null) {
-            mAuth = FirebaseAuth.getInstance();
-        }
+        this.mAuth = mAuth;
+        this.home=home;
 
-        if (home == null) {
-            home = new Home();
-        }
-
+        Log.d(TAG, "PhoneAuthModel: " + this + "\n"+mAuth);
 
     }
 
 
-    void initFireBaseCallbacks(CallbacksFinished listener) {
+    void initFireBaseCallbacks() {
 
-        viewModelListener = listener;
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
 
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
@@ -78,22 +63,23 @@ class PhoneAuthModel {
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
 
-                String s;
-
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
 
-                    s = "Invalid Phone Number";
+                    exception = "Invalid Phone Number";
 
                 } else if (e instanceof FirebaseNetworkException) {
 
-                    s = "Poor Internet Connection";
+                    exception = "Poor Internet Connection";
 
                 } else {
 
-                    s = "An Error occurred, Try again.";
+                    exception = "An Error occurred, Try again.";
                 }
 
-                viewModelListener.verificationFailed(s);
+
+                isUpdating.setValue(false);
+              
+                verificationFailed.setValue(true);
 
                 Log.d(TAG, "verification failed with exception " + e);
 
@@ -106,7 +92,8 @@ class PhoneAuthModel {
                 Log.d(TAG, "code Sent");
                 mResendToken = token;
                 mVerificationId = verificationId;
-                viewModelListener.CodeSent(mVerificationId);
+                isUpdating.setValue(false);
+                codeSent.setValue(true);
 
 
             }
@@ -115,9 +102,11 @@ class PhoneAuthModel {
     }
 
     void phoneLogin(String number) {
+
+        isUpdating.setValue(true);
+
         Log.d(TAG, number);
         String phoneNumber = "+961" + number;
-        Log.d(TAG, "code Sent");
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 1,                 // Timeout duration
@@ -133,33 +122,37 @@ class PhoneAuthModel {
 
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(home, task -> {
+                    isUpdating.setValue(false);
+
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
-                        viewModelListener.registerSuccess();
+                        registrationSuccess.setValue(true);
+
                     } else {
 
-                        String s;
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
 
-                            s = "Invalid Code";
+                            exception = "Invalid Code";
 
                         } else if (task.getException() instanceof FirebaseNetworkException) {
 
-                            s = "Poor Internet Connection";
+                            exception = "Poor Internet Connection";
 
                         } else {
 
-                            s = "An error occurred, Try again";
+                            exception = "An error occurred, Try again";
 
 
                         }
 
-                        viewModelListener.registerFailed(s);
+                        registrationSuccess.setValue(false);
                     }
                 });
     }
 
     void resendVerificationCode(String number) {
+
+        isUpdating.setValue(true);
         String phoneNumber = "+961" + number;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
@@ -172,10 +165,28 @@ class PhoneAuthModel {
 
     }
 
-    void clearReferences() {
-        if (viewModelListener != null) {
-            viewModelListener = null;
-        }
+     String getVerificationId() {
+        return mVerificationId;
+    }
+
+    public String getException() {
+        return exception;
+    }
+
+    MutableLiveData<Boolean> getVerificationFailed() {
+        return verificationFailed;
+    }
+
+     MutableLiveData<Boolean> getCodeSent() {
+        return codeSent;
+    }
+
+     MutableLiveData<Boolean> getRegistrationSuccess() {
+        return registrationSuccess;
+    }
+
+    MutableLiveData<Boolean> getIsUpdating() {
+        return isUpdating;
     }
 
 

@@ -77,15 +77,13 @@ public class FindAdapter extends RecyclerView.Adapter<FindAdapter.StoreViewHolde
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "stores size from getItemCount is: " + stores.size());
         return stores.size();
-
     }
 
 
-   class StoreViewHolder extends RecyclerView.ViewHolder {
+    class StoreViewHolder extends RecyclerView.ViewHolder {
 
-         TextView name;
+        TextView name;
         RatingBar rating;
         TextView frontDescription;
         ImageView storeImage;

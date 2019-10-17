@@ -10,17 +10,23 @@ import android.widget.TextView;
 
 import androidx.navigation.Navigation;
 
-import com.Czynt.kazdoura.Find.Find;
+import com.Czynt.kazdoura.Utils.LocationManager;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 
 public class LocationBottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
     private final static String TAG = "LocationBottomFragment";
+    private LocationManager locationManager;
 
-    public LocationBottomSheetFragment() {
+
+
+    public LocationBottomSheetFragment(LocationManager locationManager) {
+        this.locationManager = locationManager;
     }
 
 
@@ -51,7 +57,7 @@ public class LocationBottomSheetFragment extends BottomSheetDialogFragment imple
 
         if (v.getId() == R.id.useCurrentLocation) {
 
-            ((Home) Objects.requireNonNull(getActivity())).getLocation((Find) getParentFragment(),false);
+            ((Home) Objects.requireNonNull(getActivity())).getLocation();
             this.dismiss();
 
         }

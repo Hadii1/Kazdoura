@@ -1,10 +1,12 @@
 package com.Czynt.kazdoura.Login.PhoneAuth;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,6 +24,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.Czynt.kazdoura.R;
+import com.Czynt.kazdoura.di.ViewModels.ViewModelProviderFactory;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -30,8 +32,13 @@ import com.raycoarana.codeinputview.CodeInputView;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
 
-public class PhoneAuth extends Fragment implements View.OnClickListener {
+import dagger.android.support.DaggerFragment;
+
+
+public class PhoneAuth extends DaggerFragment implements View.OnClickListener {
+
 
     private final static int STATE_SIGNIN_SUCCESS = 2;
     private final static int STATE_VERIFY_FAILED = 3;
@@ -43,13 +50,15 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
     private Button verify, resend;
     private TextView enterThePin;
     private NavController navController;
+    private ConstraintLayout contentLayout;
     private CountDownTimer count;
     private TextView timer;
     private CodeInputView codeInput;
     private TextInputLayout phoneNumberLayout;
-    private LottieAnimationView loader;
-    private ConstraintLayout mainLayout;
-    private TextWatcher textWatcher = new TextWatcher() {
+    private LottieAnimationView loaderAnim, successAnim;
+    private final TextWatcher textWatcher = new TextWatcher() {
+
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -76,27 +85,31 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
     public PhoneAuth() {
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Inject
+    ViewModelProviderFactory providerFactory;
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.phone_auth, container, false);
+        Log.d(TAG, "onCreateView: ");
 
-        phoneAuthViewModel = ViewModelProviders.of(this).get(PhoneAuthViewModel.class);
 
+        assert Objects.requireNonNull(getActivity()).getApplication() != null;
+
+        phoneAuthViewModel = ViewModelProviders.of(this, providerFactory).get(PhoneAuthViewModel.class);
+
+        subscribeListeners();
+
+        initViews(v);
+
+        return v;
+    }
+
+    private void subscribeListeners() {
         phoneAuthViewModel.getRegistrationFlag().observe(getViewLifecycleOwner(), registrationSuccess -> {
 
             if (registrationSuccess) {
@@ -112,17 +125,18 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
 
         phoneAuthViewModel.getIsUpdating().observe(getViewLifecycleOwner(), isUpdating -> {
             if (isUpdating) {
-                loader.setVisibility(View.VISIBLE);
-                loader.playAnimation();
+                loaderAnim.setVisibility(View.VISIBLE);
+                loaderAnim.playAnimation();
 
             } else {
-                loader.cancelAnimation();
-                loader.setVisibility(View.INVISIBLE);
+                loaderAnim.cancelAnimation();
+                loaderAnim.setVisibility(View.INVISIBLE);
             }
         });
-        phoneAuthViewModel.getVerificationFlag().observe(getViewLifecycleOwner(), verificationSuccess -> {
 
-            if (!verificationSuccess) {
+        phoneAuthViewModel.getVerificationFlag().observe(getViewLifecycleOwner(), verificationFailed -> {
+
+            if (verificationFailed) {
 
                 updateUi(STATE_VERIFY_FAILED);
 
@@ -139,26 +153,23 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
             }
 
         });
-
-        initializeViews(v);
-
-        return v;
     }
 
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+
     }
 
 
-    private void initializeViews(View v) {
+    private void initViews(View v) {
 
         navController = Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment);
 
         phoneNumberLayout = v.findViewById(R.id.phoneNumberLayout);
         phoneNumberLayout.setStartIconTintList(null);
-        mainLayout = v.findViewById(R.id.mainLayout);
         timer = v.findViewById(R.id.timer);
         codeInput = v.findViewById(R.id.code);
         enterThePin = v.findViewById(R.id.enterThePin);
@@ -169,8 +180,10 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
 
         etPhoneNumber.addTextChangedListener(textWatcher);
 
+        contentLayout = v.findViewById(R.id.phoneAuthContentLayout);
 
-        loader = v.findViewById(R.id.loader);
+        loaderAnim = v.findViewById(R.id.loader);
+        successAnim = v.findViewById(R.id.successAnim);
 
 
         count = new CountDownTimer(60000, 1000) {
@@ -185,6 +198,29 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
             }
 
         };
+
+        successAnim.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                navController.navigate(R.id.action_global_Find);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
 
         verify.setOnClickListener(this);
         resend.setOnClickListener(this);
@@ -207,7 +243,6 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
 
             phoneAuthViewModel.verifyNumber(etPhoneNumber.getText().toString());
 
-
             phoneNumberLayout.setHint("Mobile");
             phoneNumberLayout.setEnabled(false);
 
@@ -225,9 +260,9 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
         }
         if (v.getId() == R.id.tvEditNumber) {
 
-            if (loader.getVisibility() == View.VISIBLE) {
-                loader.cancelAnimation();
-                loader.setVisibility(View.INVISIBLE);
+            if (loaderAnim.getVisibility() == View.VISIBLE) {
+                loaderAnim.cancelAnimation();
+                loaderAnim.setVisibility(View.INVISIBLE);
 
             }
 
@@ -261,11 +296,7 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
 
             case STATE_VERIFY_FAILED:
 
-                Snackbar snackbar = Snackbar.make(etPhoneNumber, phoneAuthViewModel.getException(), Snackbar.LENGTH_SHORT);
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(getResources().getColor(R.color.smokyWhite));
-                snackbar.setTextColor(getResources().getColor(R.color.textColor));
-                snackbar.show();
+                Snackbar.make(etPhoneNumber, phoneAuthViewModel.getException(), Snackbar.LENGTH_SHORT).show();
 
 
                 if (phoneAuthViewModel.getException().equals("Invalid Phone Number")) {
@@ -300,7 +331,9 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
 
             case STATE_SIGNIN_SUCCESS:
 
-                navController.navigate(R.id.action_global_Find);
+                contentLayout.setAlpha(0.05f);
+                successAnim.setVisibility(View.VISIBLE);
+                successAnim.playAnimation();
 
                 break;
 
@@ -325,5 +358,17 @@ public class PhoneAuth extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+        count.onFinish();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+
+    }
 }

@@ -4,25 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/verify"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/successAnim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:enabled="false"
-        android:fontFamily="@font/fira_sans_condensed"
-        android:text="@string/verify" />
-
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loader"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:elevation="10dp"
+        android:elevation="25dp"
         android:scaleType="centerInside"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,128 +17,166 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
         app:lottie_autoPlay="false"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loader"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/success"
         app:lottie_speed="1.5" />
 
-    <Button
-        android:id="@+id/resendCode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timer"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:enabled="false"
-        android:fontFamily="@font/fira_sans_condensed"
-        android:text="@string/resend_code"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/tvEditNumber"
-        app:layout_constraintBottom_toBottomOf="@id/phoneNumberLayout"
-        app:layout_constraintStart_toEndOf="@id/phoneNumberLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="false"
-        android:fontFamily="@font/fira_sans_condensed"
-        android:text="@string/edit"
-        android:textColor="@color/com_facebook_blue" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phoneNumberLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        app:boxBackgroundColor="#ffffff"
-        app:boxStrokeColor="@color/colorPrimary"
-        app:hintTextColor="@color/textColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phoneAuthHeader"
-        app:startIconDrawable="@drawable/lebanon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="80dp"
-        android:hint="@string/inside_hint_phone_number">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneNumber"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/phoneAuthContentLayout">
+        <Button
+            android:id="@+id/verify"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:enabled="false"
             android:fontFamily="@font/fira_sans_condensed"
-            android:inputType="phone"
-            android:maxLength="8" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/verify" />
 
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/enterThePin"
-        style="@style/sb1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/verify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/enter_the_pin_you_received_via_sms_on"
-        android:textColor="@color/textColor"
-        android:visibility="invisible" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:elevation="10dp"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loader"
+            app:lottie_speed="1.5" />
 
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/timer"
-        style="@style/ph5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/code"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/fira_sans_condensed"
-        android:gravity="center"
-        android:textColor="@color/textColor"
-        android:visibility="invisible"
+        <Button
+            android:id="@+id/resendCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:enabled="false"
+            android:fontFamily="@font/fira_sans_condensed"
+            android:text="@string/resend_code"
+            android:visibility="invisible" />
 
-        />
-
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/phoneAuthHeader"
-        style="@style/ph5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/enter_your_phone_number"
-        android:textStyle="normal" />
+        <TextView
+            android:id="@+id/tvEditNumber"
+            app:layout_constraintBottom_toBottomOf="@id/phoneNumberLayout"
+            app:layout_constraintStart_toEndOf="@id/phoneNumberLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:fontFamily="@font/fira_sans_condensed"
+            android:text="@string/edit"
+            android:textColor="@color/com_facebook_blue" />
 
 
-    <com.raycoarana.codeinputview.CodeInputView
-        android:id="@+id/code"
-        app:animate_on_complete="false"
-        app:code_text_color="@color/colorPrimaryDark"
-        app:error_color="@color/error"
-        app:error_text_color="@color/error"
-        app:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enterThePin"
-        app:length_of_code="6"
-        app:underline_selected_color="@color/colorSecondary"
-        app:underline_stroke_width="2.5dp"
-        app:underline_width="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:visibility="invisible" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            app:boxBackgroundColor="#ffffff"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phoneAuthHeader"
+            app:startIconDrawable="@drawable/lebanon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="80dp"
+            android:hint="@string/inside_hint_phone_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fira_sans_condensed"
+                android:inputType="phone"
+                android:maxLength="8" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/enterThePin"
+            style="@style/sb1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/enter_the_pin_you_received_via_sms_on"
+            android:textColor="@color/textColor"
+            android:visibility="invisible" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/timer"
+            style="@style/ph5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/code"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/fira_sans_condensed"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:visibility="invisible"
+
+            />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/phoneAuthHeader"
+            style="@style/ph5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/enter_your_phone_number"
+            android:textStyle="normal" />
+
+
+        <com.raycoarana.codeinputview.CodeInputView
+            android:id="@+id/code"
+            app:animate_on_complete="false"
+            app:code_text_color="@color/colorPrimaryDark"
+            app:error_color="@color/error"
+            app:error_text_color="@color/error"
+            app:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enterThePin"
+            app:length_of_code="6"
+            app:underline_selected_color="@color/colorSecondary"
+            app:underline_stroke_width="2.5dp"
+            app:underline_width="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.Czynt.kazdoura.Login.EmailAuth;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,35 +8,43 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.Czynt.kazdoura.R;
+import com.Czynt.kazdoura.di.ViewModels.ViewModelProviderFactory;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
 
-public class EmailLogin extends Fragment {
+import dagger.android.support.DaggerFragment;
+
+
+public class EmailAuth extends DaggerFragment {
+
 
     private Button bSignIn, bSignUp;
-    private LottieAnimationView loader;
+    private LottieAnimationView loaderAnim, successAnim;
     private EditText etName, etEmail, etPassword;
-    private EmailLoginViewModel emailViewModel;
+    private EmailAuthViewModel emailViewModel;
     private TextInputLayout passwordLayout;
     private ConstraintLayout contentLayout;
     private NavController navController;
-
     private String username, email, password;
+    private static final String TAG = "EmailAuth";
+
+
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -71,17 +80,17 @@ public class EmailLogin extends Fragment {
         }
     };
 
-    public EmailLogin() {
-        // Required empty public constructor
+
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+
+
+    public EmailAuth() {
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -89,44 +98,55 @@ public class EmailLogin extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.email_login, container, false);
 
-        emailViewModel = ViewModelProviders.of(this).get(EmailLoginViewModel.class);
+        emailViewModel = ViewModelProviders.of(this,providerFactory).get(EmailAuthViewModel.class);
 
+
+        subscribeObservers();
+        initViews(v);
+
+        return v;
+
+    }
+
+    private void subscribeObservers() {
         emailViewModel.getIsUpdating().observe(getViewLifecycleOwner(), isUpdating -> {
             if (isUpdating) {
                 showProgressBar();
+                etEmail.setEnabled(false);
+                etName.setEnabled(false);
+                etPassword.setEnabled(false);
             } else {
                 hideProgressBar();
+
+                etEmail.setEnabled(true);
+                etName.setEnabled(true);
+                etPassword.setEnabled(true);
             }
         });
 
-
-        emailViewModel.getSignInSuccess().observe(getViewLifecycleOwner(), signInSuccess -> {
-
-            if (signInSuccess) {
-
-                navController.navigate(R.id.action_global_Find);
-
-            } else {
-
-                loginFailed(emailViewModel.getException());
-
-            }
-
-        });
 
         emailViewModel.getRegisterSuccess().observe(getViewLifecycleOwner(), registerSuccess -> {
 
             if (registerSuccess) {
 
-                navController.navigate(R.id.action_global_Find);
+                playAnimAndNavigate();
 
+            } else {
+
+                loginFailed(emailViewModel.getException());
             }
 
         });
 
-        initViews(v);
+    }
 
-        return v;
+    private void playAnimAndNavigate() {
+
+        contentLayout.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
+        contentLayout.setAlpha(0.05f);
+        successAnim.setVisibility(View.VISIBLE);
+        successAnim.playAnimation();
+
 
     }
 
@@ -140,6 +160,7 @@ public class EmailLogin extends Fragment {
         etEmail = v.findViewById(R.id.etEmail);
         etPassword = v.findViewById(R.id.etPassword);
         passwordLayout = v.findViewById(R.id.passwordLayout);
+
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
         username = etName.getText().toString();
@@ -151,11 +172,35 @@ public class EmailLogin extends Fragment {
 
         bSignIn = v.findViewById(R.id.bSignIn);
         bSignUp = v.findViewById(R.id.bSignUp);
+
         bSignIn.setOnClickListener(v1 -> emailViewModel.signInPressed(email, password));
         bSignUp.setOnClickListener(v12 -> emailViewModel.signUpPressed(email, password, username));
 
 
-        loader = v.findViewById(R.id.loader);
+        loaderAnim = v.findViewById(R.id.loader);
+        successAnim = v.findViewById(R.id.success);
+
+        successAnim.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                navController.navigate(R.id.action_global_Find);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
 
 
     }
@@ -171,8 +216,8 @@ public class EmailLogin extends Fragment {
         bSignIn.setEnabled(false);
         bSignUp.setEnabled(false);
         contentLayout.setAlpha(0.6f);
-        loader.setVisibility(View.VISIBLE);
-        loader.playAnimation();
+        loaderAnim.setVisibility(View.VISIBLE);
+        loaderAnim.playAnimation();
     }
 
 
@@ -180,8 +225,8 @@ public class EmailLogin extends Fragment {
         bSignIn.setEnabled(true);
         bSignUp.setEnabled(true);
         contentLayout.setAlpha(1);
-        loader.setVisibility(View.INVISIBLE);
-        loader.cancelAnimation();
+        loaderAnim.setVisibility(View.INVISIBLE);
+        loaderAnim.cancelAnimation();
 
     }
 

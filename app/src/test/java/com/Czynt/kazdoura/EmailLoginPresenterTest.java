@@ -1,8 +1,5 @@
 package com.Czynt.kazdoura;
 
-import com.Czynt.kazdoura.Login.EmailAuth.EmailLoginModel;
-import com.Czynt.kazdoura.Login.EmailAuth.EmailLoginPresenter;
-import com.Czynt.kazdoura.Login.EmailAuth.EmailLoginView;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,19 +25,12 @@ public class EmailLoginPresenterTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Mock
-    EmailLoginView view;
 
-    @Mock
-    EmailLoginModel model;
-
-
-    private EmailLoginPresenter presenter;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        presenter = new EmailLoginPresenter(model, view);
+
     }
 
 

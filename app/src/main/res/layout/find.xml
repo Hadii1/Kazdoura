@@ -47,6 +47,18 @@
             app:lottie_autoPlay="false"
             app:lottie_rawRes="@raw/sad"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/pb1"
+            android:textStyle="bold"
+            android:id="@+id/tryAgainText"
+            android:text="@string/try_again"
+            android:textColor="@color/com_facebook_blue"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginTop="200dp"/>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -111,7 +123,7 @@
                 app:iconGravity="start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Advanced Search"
+                android:text="@string/advanced_search"
                 app:layout_scrollFlags="scroll"/>
 
             <com.google.android.material.button.MaterialButton
@@ -125,7 +137,7 @@
                 android:layout_marginBottom="8dp"
                 android:alpha="0.9"
                 android:fontFamily="@font/fira_sans_condensed"
-                android:text="Change Location"
+                android:text="@string/change_location"
                 android:textColor="@color/colorPrimaryDark"
                 app:icon="@drawable/location_pin"
                 app:layout_scrollFlags="scroll"
@@ -140,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="6dp"
-                android:text="default text"
+                android:text="@string/default_text"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
                 app:layout_scrollFlags="scroll" />
@@ -176,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Sort By"
+                    android:text="@string/sort_by"
                     />
 
                 <com.google.android.material.button.MaterialButton
@@ -185,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Map View" />
+                    android:text="@string/map_view" />
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

@@ -26,24 +26,26 @@
 
 
     <style name="ph4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/fira_sans_condensed</item>
+        <item name="fontFamily">@font/fira_sans</item>
     </style>
 
     <style name="ph5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/fira_sans_condensed</item>
+        <item name="fontFamily">@font/fira_sans</item>
     </style>
 
     <style name="ph6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/fira_sans_condensed</item>
+        <item name="fontFamily">@font/fira_sans</item>
     </style>
 
     <style name="pb1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/fira_sans_condensed</item>
+        <item name="fontFamily">@font/fira_sans</item>
     </style>
 
     <style name="pb2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/fira_sans_condensed</item>
+        <item name="fontFamily">@font/fira_sans</item>
     </style>
+
+
 
 
     <style name="sh4" parent="TextAppearance.MaterialComponents.Headline4">
@@ -67,7 +69,6 @@
     </style>
 
     <style name="sb3" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/josefin_sans</item>
     </style>
 

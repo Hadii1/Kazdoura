@@ -78,7 +78,7 @@
             tools:layout="@layout/phone_auth" />
         <fragment
             android:id="@+id/emailLogin"
-            android:name="com.Czynt.kazdoura.Login.EmailAuth.EmailLogin"
+            android:name="com.Czynt.kazdoura.Login.EmailAuth.EmailAuth"
             android:label="fragment_email_login"
             tools:layout="@layout/email_login" />
 
@@ -99,8 +99,12 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.Czynt.kazdoura.MapFragment"
+        android:name="com.Czynt.kazdoura.ManualLocation.ManualLocation"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_Find"
+            app:destination="@id/Find" />
+    </fragment>
 
 </navigation>
